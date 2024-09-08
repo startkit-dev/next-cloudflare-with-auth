@@ -1,9 +1,7 @@
-import { neon } from "@neondatabase/serverless"
-import { drizzle } from "drizzle-orm/neon-http"
+import { drizzle } from "drizzle-orm/d1"
 
 import { env } from "@/env/server"
 
-export const sql = neon(env.DATABASE_URL)
-export const db = drizzle(sql, {
+export const db = drizzle(env.DB, {
   logger: env.NODE_ENV === "development"
 })

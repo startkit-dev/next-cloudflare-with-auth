@@ -5,7 +5,7 @@ import type { PropsWithChildren } from "react"
 
 export const runtime = "edge"
 
-export default function MainLayout({ children }: Readonly<PropsWithChildren>) {
+export default function LoginLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />

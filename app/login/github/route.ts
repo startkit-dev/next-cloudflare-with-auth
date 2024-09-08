@@ -4,6 +4,8 @@ import { cookies } from "next/headers"
 import { env } from "@/env/server"
 import { github } from "@/lib/auth/providers/github"
 
+export const runtime = "edge"
+
 export async function GET(): Promise<Response> {
   const state = generateState()
   const url = await github.createAuthorizationURL(state)

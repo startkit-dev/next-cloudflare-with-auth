@@ -9,16 +9,12 @@ function host(fallback = "/") {
     return env.CF_PAGES_URL
   }
 
-  if (env.VERCEL_URL) {
-    return `https://${env.VERCEL_URL}`
-  }
-
   return fallback
 }
 
 /**
  * Helper function to determine the hostname for the given environment,
- * with a focus on working with Vercel deployments.
+ * with a focus on working with Cloudflare deployments.
  *
  * @returns the hostname for the given environment
  */

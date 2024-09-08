@@ -8,15 +8,13 @@ export const env = createEnv({
   extends: [shared],
   server: {
     /**
-     * Cloudflare Env Vars
+     * Cloudflare bindings
      */
-    CF_PAGES_COMMIT_SHA: z.string().default("unknown"),
-    CF_PAGES_URL: z.string().url().optional(),
+    DB: z.custom<D1Database>(),
 
     /**
      *
      */
-    DATABASE_URL: z.string().url(),
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string()
   }

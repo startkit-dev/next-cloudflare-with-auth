@@ -15,7 +15,7 @@
 - ✅ Type-safe environment variables via **t3-env**
 - ✅ **Tailwind CSS** for utility-first CSS
 - ✅ Automatic **sitemap.xml**, **robots.txt**, and **manifest** generation
-- ✅ Database support via **Drizzle ORM** and **Neon Serverless Postgres**
+- ✅ Database support via **Drizzle ORM** and **Cloudflare D1**
 - ✅ Authentication (OAuth2) via **Lucia**
 
 ## Installation
@@ -59,6 +59,42 @@ There are several environment variables that are required for using the app.
 
 Server-only environment variables (`./env/server.ts`)
 
+## Database
+
+You must create a db
+
+```
+bun wrangler d1 create DB
+bun wrangler d1 create --env preview
+```
+
+### Migrating
+
+Locally:
+
 ```sh
-DATABASE_URL
+bun db:migrate --local
+```
+
+Remotely:
+
+This happens automatically during deploy via the `bin/release` script. The migration occurs as the final step of the build process before the new code is deployed to the Cloudflare Edge network.
+
+Because of this zero-downtime deployment, there is a small timeframe where the database is migrated and the previous code is still live (before the new code is live). Please be sure to write your migrations accordingly.
+
+## Queues
+
+You can enable background jobs within the same app via [Cloudflare Queues](https://developers.cloudflare.com/queues/) by [adding a custom entryponit](https://developers.cloudflare.com/pages/framework-guides/nextjs/ssr/advanced/#custom-worker-entrypoint) and defining the queue handler.
+
+For example:
+
+```ts
+import nextOnPagesHandler from "@cloudflare/next-on-pages/fetch-handler"
+
+export default {
+  fetch: nextOnPagesHandler.fetch,
+  async queue(batch: MessageBatch<TYPE>, env: Environment) {
+    // process logic
+  }
+} as ExportedHandler<{ ASSETS: Fetcher }>
 ```

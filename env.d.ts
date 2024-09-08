@@ -1,6 +1,7 @@
-/*interface CloudflareEnv {
-  CF_PAGES_COMMIT_SHA?: string
-  CF_PAGES_URL?: string
-  NODE_VERSION?: string
+import type { D1Database } from "@cloudflare/workers-types"
+
+declare global {
+  interface CloudflareEnv {
+    DB: D1Database
+  }
 }
-*/

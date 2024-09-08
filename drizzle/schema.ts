@@ -1,39 +1,45 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix  */
 import { createId } from "@paralleldrive/cuid2"
-import { pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core"
+import { sql } from "drizzle-orm"
+import { integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core"
 
-export const usersTable = pgTable("users", {
-  createdAt: timestamp("created_at").notNull().defaultNow(),
+export const usersTable = sqliteTable("users", {
   id: text("id")
+    .notNull()
     .primaryKey()
     .$defaultFn(() => createId()),
-  updatedAt: timestamp("updated_at")
+  createdAt: integer("created_at", { mode: "timestamp_ms" })
     .notNull()
-    .$onUpdate(() => new Date())
+    .default(sql`(unixepoch() * 1000)`),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+    .notNull()
+    .default(sql`(unixepoch() * 1000)`)
+    .$onUpdateFn(() => new Date())
 })
 
-export const sessionsTable = pgTable("sessions", {
-  expiresAt: timestamp("expires_at", {
-    mode: "date",
-    withTimezone: true
-  }).notNull(),
-  id: text("id").primaryKey(),
+export const sessionsTable = sqliteTable("sessions", {
+  id: text("id").notNull().primaryKey(),
   userId: text("user_id")
     .notNull()
-    .references(() => usersTable.id)
+    .references(() => usersTable.id),
+  expiresAt: integer("expires_at").notNull()
 })
 
-export const oauthAccountsTable = pgTable(
+export const oauthAccountsTable = sqliteTable(
   "oauth_accounts",
   {
-    createdAt: timestamp("created_at").notNull().defaultNow(),
     providerId: text("provider_id").notNull(),
     providerUserId: text("provider_user_id").notNull(),
-    updatedAt: timestamp("updated_at")
-      .notNull()
-      .$onUpdate(() => new Date()),
     userId: text("user_id")
       .notNull()
-      .references(() => usersTable.id)
+      .references(() => usersTable.id),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`)
+      .$onUpdateFn(() => new Date())
   },
   (table) => ({
     pk: primaryKey({ columns: [table.providerId, table.providerUserId] })

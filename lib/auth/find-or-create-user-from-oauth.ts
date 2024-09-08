@@ -3,7 +3,6 @@ import { and, eq } from "drizzle-orm"
 
 import { db } from "@/drizzle/client"
 import { oauthAccountsTable, usersTable } from "@/drizzle/schema"
-import { transaction } from "@/drizzle/transaction"
 
 /**
  * Find or create the user from the OAuth provider.
@@ -40,17 +39,16 @@ export async function findOrCreateUserFromOAuth(
   }
 
   const userId = createId()
-  await transaction(
+  await db.batch([
     db.insert(usersTable).values({
       id: userId
     }),
-
     db.insert(oauthAccountsTable).values({
       providerId,
       providerUserId: providerUserId.toString(),
       userId
     })
-  )
+  ])
 
   return userId
 }

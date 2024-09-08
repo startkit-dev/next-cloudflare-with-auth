@@ -1,4 +1,4 @@
-import { TriangleIcon } from "lucide-react"
+import { FlameIcon } from "lucide-react"
 import Link from "next/link"
 
 import { Logo } from "@/components/icons/brand/logo"
@@ -50,11 +50,11 @@ export default async function Home() {
             asChild
           >
             <Link
-              href="https://vercel.com/new"
+              href="https://pages.cloudflare.com"
               rel="noopener noreferrer"
               target="_blank"
             >
-              <TriangleIcon className="size-4 fill-current" />
+              <FlameIcon className="size-4 fill-current" />
               Deploy now
             </Link>
           </Button>

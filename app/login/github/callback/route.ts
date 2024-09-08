@@ -6,6 +6,8 @@ import { lucia } from "@/lib/auth/lucia"
 import { authorizeGithub } from "@/lib/auth/providers/github"
 import { validateOauthCallback } from "@/lib/auth/validate-oauth-callback"
 
+export const runtime = "edge"
+
 export async function GET(req: Request): Promise<Response> {
   const code = validateOauthCallback(req)
   if (!code) {

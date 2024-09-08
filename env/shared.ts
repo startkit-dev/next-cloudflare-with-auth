@@ -1,9 +1,10 @@
 import { createEnv } from "@t3-oss/env-nextjs"
-import { vercel } from "@t3-oss/env-nextjs/presets"
 import { z } from "zod"
 
+import { cloudflarePages } from "./presets/cloudflare-pages"
+
 export const env = createEnv({
-  extends: [vercel()],
+  extends: [cloudflarePages()],
   runtimeEnv: {
     NEXT_PUBLIC_HOST: process.env.NEXT_PUBLIC_HOST,
     NODE_ENV: process.env.NODE_ENV

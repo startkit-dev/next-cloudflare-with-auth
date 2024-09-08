@@ -1,4 +1,4 @@
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle"
+import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle"
 import { Lucia } from "lucia"
 
 import { db } from "@/drizzle/client"
@@ -17,7 +17,7 @@ interface DatabaseUserAttributes {
   username: string
 }
 
-const adapter = new DrizzlePostgreSQLAdapter(db, sessionsTable, usersTable)
+const adapter = new DrizzleSQLiteAdapter(db, sessionsTable, usersTable)
 
 export const lucia = new Lucia(adapter, {
   getUserAttributes: (attributes) => {
