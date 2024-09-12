@@ -50,6 +50,12 @@ export default tseslint.config(
           checksVoidReturn: false
         }
       ],
+      "@typescript-eslint/restrict-template-expressions": [
+        "warn",
+        {
+          allowNumber: true
+        }
+      ],
       "import/order": [
         "error",
         {

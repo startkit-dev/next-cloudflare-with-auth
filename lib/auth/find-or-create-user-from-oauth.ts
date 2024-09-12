@@ -1,8 +1,14 @@
-import { createId } from "@paralleldrive/cuid2"
 import { and, eq } from "drizzle-orm"
 
 import { db } from "@/drizzle/client"
 import { oauthAccountsTable, usersTable } from "@/drizzle/schema"
+
+interface OAuthUserAttributes {
+  id: string | number
+  email: string
+  name?: string | null
+  avatarUrl?: string | null
+}
 
 /**
  * Find or create the user from the OAuth provider.
@@ -21,7 +27,7 @@ import { oauthAccountsTable, usersTable } from "@/drizzle/schema"
  */
 export async function findOrCreateUserFromOAuth(
   providerId: string,
-  providerUserId: string | number
+  { id: providerUserId, email, name, avatarUrl }: OAuthUserAttributes
 ) {
   const [existingAccount] = await db
     .select()
@@ -35,20 +41,53 @@ export async function findOrCreateUserFromOAuth(
     .limit(1)
 
   if (existingAccount) {
-    return existingAccount.userId
+    const [user] = await db
+      .update(usersTable)
+      .set({
+        avatarUrl: avatarUrl ?? undefined,
+        email,
+        name: name ?? undefined
+      })
+      .where(eq(usersTable.id, existingAccount.userId))
+      .returning()
+
+    if (!user) {
+      throw new Error(
+        `Failed to find user for OAuth account: ${providerId}: '${providerUserId}'`
+      )
+    }
+
+    return user
   }
 
-  const userId = createId()
-  await db.batch([
-    db.insert(usersTable).values({
-      id: userId
-    }),
-    db.insert(oauthAccountsTable).values({
-      providerId,
-      providerUserId: providerUserId.toString(),
-      userId
+  const [user] = await db
+    .insert(usersTable)
+    .values({
+      avatarUrl,
+      email,
+      name: name ?? null
     })
-  ])
+    .onConflictDoUpdate({
+      set: {
+        avatarUrl: avatarUrl ?? undefined,
+        email,
+        name: name ?? undefined
+      },
+      target: [usersTable.email]
+    })
+    .returning()
 
-  return userId
+  if (!user) {
+    throw new Error(
+      `Failed to create user for OAuth account: ${providerId}: '${providerUserId}'`
+    )
+  }
+
+  await db.insert(oauthAccountsTable).values({
+    providerId,
+    providerUserId: providerUserId.toString(),
+    userId: user.id
+  })
+
+  return user
 }

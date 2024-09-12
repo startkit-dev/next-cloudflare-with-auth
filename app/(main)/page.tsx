@@ -3,9 +3,11 @@ import Link from "next/link"
 
 import { Logo } from "@/components/icons/brand/logo"
 import { OAuthButton } from "@/components/shared/oauth-button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { logout } from "@/lib/auth/actions/logout"
 import { getSession } from "@/lib/auth/get-session"
+import { getInitials } from "@/lib/utils/string-fns/get-initials"
 
 export default async function Home() {
   const { user } = await getSession()
@@ -36,6 +38,15 @@ export default async function Home() {
                 type="submit"
                 variant="secondary"
               >
+                <Avatar className="size-4">
+                  <AvatarImage
+                    alt={user.name ?? user.email}
+                    src={user.avatarUrl ?? undefined}
+                  />
+                  <AvatarFallback>
+                    {getInitials(user.name ?? user.email)}
+                  </AvatarFallback>
+                </Avatar>
                 Sign out
               </Button>
             </form>

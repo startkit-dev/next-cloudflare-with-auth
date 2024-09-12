@@ -8,18 +8,21 @@ NODE_VERSION = "20"
 BUILD_ENV = "production"
 CLOUDFLARE_ACCOUNT_ID = "017b203cbba70f10d4c0be86af2419a7" # Your account id
 
+# bun wrangler d1 create startkit-next-d1
 [[d1_databases]]
 binding = "DB"
 database_name = "startkit-next-d1"
-database_id = "aafb87c5-0776-4a0f-9f5e-7936dab4f5f7"
+database_id = "e01b2b81-4a8a-40c6-85da-7764ff83c719"
 migrations_dir = "drizzle/migrations"
 
 [env.preview.vars]
 NODE_VERSION = "20"
 BUILD_ENV = "preview"
+CLOUDFLARE_ACCOUNT_ID = "017b203cbba70f10d4c0be86af2419a7" # Your account id
 
+# bun wrangler d1 create startkit-next-d1-preview --env preview
 [[env.preview.d1_databases]]
 binding = "DB"
-database_name = "startkit-next-d1-previe"
-database_id = "fd96c2ac-b502-4f8f-9e0a-215e08272c75"
+database_name = "startkit-next-d1-preview"
+database_id = "8d5676a1-1fbf-4f2a-b6c1-74259516415f"
 migrations_dir = "drizzle/migrations"

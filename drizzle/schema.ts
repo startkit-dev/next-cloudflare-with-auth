@@ -3,11 +3,16 @@ import { createId } from "@paralleldrive/cuid2"
 import { sql } from "drizzle-orm"
 import { integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core"
 
+import { citext } from "./custom-types/citext"
+
 export const usersTable = sqliteTable("users", {
   id: text("id")
     .notNull()
     .primaryKey()
     .$defaultFn(() => createId()),
+  email: citext("email").notNull().unique(),
+  name: text("name"),
+  avatarUrl: text("avatar_url"),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .notNull()
     .default(sql`(unixepoch() * 1000)`),

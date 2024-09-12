@@ -18,8 +18,8 @@ export async function GET(req: Request): Promise<Response> {
 
   try {
     const githubUser = await authorizeGithub(code)
-    const userId = await findOrCreateUserFromOAuth("github", githubUser.id)
-    const session = await lucia.createSession(userId, {})
+    const user = await findOrCreateUserFromOAuth("github", githubUser)
+    const session = await lucia.createSession(user.id, {})
     const sessionCookie = lucia.createSessionCookie(session.id)
 
     cookies().set(

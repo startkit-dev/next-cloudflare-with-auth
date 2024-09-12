@@ -17,6 +17,11 @@ CREATE TABLE `sessions` (
 --> statement-breakpoint
 CREATE TABLE `users` (
 	`id` text PRIMARY KEY NOT NULL,
+	`email` text COLLATE NOCASE NOT NULL,
+	`name` text,
+	`avatar_url` text,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL
 );
+--> statement-breakpoint
+CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);

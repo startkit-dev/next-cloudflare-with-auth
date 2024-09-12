@@ -64,8 +64,8 @@ Server-only environment variables (`./env/server.ts`)
 You must create a db
 
 ```
-bun wrangler d1 create DB
-bun wrangler d1 create --env preview
+bun wrangler d1 create startkit-next-d1
+bun wrangler d1 create startkit-next-d1-preview --env preview
 ```
 
 ### Migrating

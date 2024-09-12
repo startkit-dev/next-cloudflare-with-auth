@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ded0d6fb-0f74-40eb-aff4-7ba18dbc23a0",
+  "id": "4107de22-3696-4edd-8e90-5b5d17e48d6d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "oauth_accounts": {
@@ -126,6 +126,27 @@
           "notNull": true,
           "autoincrement": false
         },
+        "email": {
+          "name": "email",
+          "type": "text COLLATE NOCASE",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "integer",
@@ -143,7 +164,15 @@
           "default": "(unixepoch() * 1000)"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}

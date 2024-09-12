@@ -13,8 +13,9 @@ declare module "lucia" {
 }
 
 interface DatabaseUserAttributes {
-  githubId: number
-  username: string
+  email: string
+  avatarUrl: string | null
+  name: string | null
 }
 
 const adapter = new DrizzleSQLiteAdapter(db, sessionsTable, usersTable)
@@ -22,8 +23,9 @@ const adapter = new DrizzleSQLiteAdapter(db, sessionsTable, usersTable)
 export const lucia = new Lucia(adapter, {
   getUserAttributes: (attributes) => {
     return {
-      githubId: attributes.githubId,
-      username: attributes.username
+      avatarUrl: attributes.avatarUrl,
+      email: attributes.email,
+      name: attributes.name
     }
   },
   sessionCookie: {
