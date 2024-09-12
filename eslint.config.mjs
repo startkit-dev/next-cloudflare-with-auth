@@ -44,6 +44,7 @@ export default tseslint.config(
         "warn",
         { prefer: "type-imports" }
       ],
+      "@typescript-eslint/no-deprecated": "warn",
       "@typescript-eslint/no-misused-promises": [
         "error",
         {
