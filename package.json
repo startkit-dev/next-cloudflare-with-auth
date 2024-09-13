@@ -16,7 +16,7 @@
     "logs": "wrangler pages deployment tail",
     "outdated": "bunx npm-check-updates --interactive --format group",
     "prebuild": "bun run lint",
-    "preview": "bun run build:pages && wrangler pages dev",
+    "preview": "bunx @cloudflare/next-on-pages && wrangler pages dev",
     "release": "./bin/release",
     "setup": "./bin/setup",
     "start": "next start",
