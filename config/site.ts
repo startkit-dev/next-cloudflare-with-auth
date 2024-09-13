@@ -25,7 +25,7 @@ export const siteConfig = {
   // Links related to the project
   links: {
     // The GitHub link for the project
-    github: "https://github.com/startkit-dev/next-cloudflare",
+    github: "https://github.com/startkit-dev/next-cloudflare-with-auth",
 
     // The Twitter link for the project
     twitter: "https://twitter.com/mattyven"
