@@ -1,9 +1,9 @@
+import type { Session, User } from "lucia"
 import { cookies } from "next/headers"
 import { cache } from "react"
 
 import { lucia } from "./lucia"
 
-import type { Session, User } from "lucia"
 
 type Auth =
   | {

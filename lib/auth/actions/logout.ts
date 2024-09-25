@@ -1,9 +1,9 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
+import { getSession } from "../get-session"
 import { lucia } from "@/lib/auth/lucia"
 
-import { getSession } from "../get-session"
 
 interface ActionResult {
   error: string | null

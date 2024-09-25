@@ -9,6 +9,8 @@ import { logout } from "@/lib/auth/actions/logout"
 import { getSession } from "@/lib/auth/get-session"
 import { getInitials } from "@/lib/utils/string-fns/get-initials"
 
+export const runtime = "edge"
+
 export default async function Home() {
   const { user } = await getSession()
 

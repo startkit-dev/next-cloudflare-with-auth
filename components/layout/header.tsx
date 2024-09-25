@@ -1,15 +1,13 @@
 import Link from "next/link"
-
+import type { HTMLProps } from "react"
 import { Button } from "@/components/ui/button"
 import { env } from "@/env/shared"
 import { cn } from "@/lib/utils/cn"
 
-import type { HTMLProps } from "react"
-
 type Props = HTMLProps<HTMLDivElement>
 
 export function Header({ className, ...props }: Props) {
-  const target = env.NODE_ENV === "production" ? "Cloudflare" : "localhost"
+  const isCloudflare = env.NODE_ENV === "production"
 
   return (
     <header className={cn("w-full", className)} {...props}>
@@ -21,10 +19,26 @@ export function Header({ className, ...props }: Props) {
             target="_blank"
           >
             <span className="relative flex size-3">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-orange-400 opacity-75"></span>
-              <span className="relative inline-flex size-3 rounded-full bg-orange-500"></span>
+              <span
+                className={cn(
+                  "absolute inline-flex size-full animate-ping rounded-full  opacity-75",
+                  isCloudflare ? "bg-orange-400" : "bg-blue-400"
+                )}
+              ></span>
+              <span
+                className={cn(
+                  "relative inline-flex size-3 rounded-full",
+                  isCloudflare ? "bg-orange-500" : "bg-blue-500"
+                )}
+              ></span>
             </span>
-            Deployed to {target}
+            <span>
+              {isCloudflare ? (
+                <>Deployed to Cloudflare</>
+              ) : (
+                <>Running on localhost</>
+              )}
+            </span>
           </Link>
         </Button>
       </div>

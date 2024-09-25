@@ -5,9 +5,9 @@ import { useState } from "react"
 import { GithubIcon } from "@/components/icons/social/github-icon"
 import { Spinner } from "@/components/icons/spinner/spinner"
 import { Button } from "@/components/ui/button"
+import type { ButtonProps } from "@/components/ui/button"
 import { cn } from "@/lib/utils/cn"
 
-import type { ButtonProps } from "@/components/ui/button"
 
 const PROVIDERS = {
   github: {

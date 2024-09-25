@@ -1,6 +1,6 @@
+import styles from "./spinner.module.css"
 import { cn } from "@/lib/utils/cn"
 
-import styles from "./spinner.module.css"
 
 interface Props {
   className?: string
